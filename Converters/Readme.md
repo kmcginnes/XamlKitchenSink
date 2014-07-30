@@ -24,11 +24,25 @@ Sometimes you just want to make an element visibile when some value is equal to 
 You can define that constant at the converters declaration time:
 
 ``` XML
-<converters:ValueToVisibilityConverter x:Key="VisibleWhenOne" Value="1"/>
+<converters:ValueToVisibilityConverter 
+	x:Key="VisibleWhenOne" 
+	Value="1"/>
 ```
 
 Sometimes you want the element to collapse or hide whenever the value bound is equal to your constant:
 
 ``` XML
-<converters:ValueToVisibilityConverter x:Key="CollapsedWhenOne" Value="1" TrueValue="Collapsed" FalseValue="Visible"/>
+<converters:ValueToVisibilityConverter 
+	x:Key="CollapsedWhenOne" 
+	Value="1" 
+	TrueValue="Collapsed" 
+	FalseValue="Visible"/>
+```
+
+You can even use this with static values and enums:
+
+``` XML
+<converters:ValueToVisibilityConverter 
+	x:Key="VisibleWhenEditing" 
+	Value="{x:Static enums:EditMode.Editing}"/>
 ```
