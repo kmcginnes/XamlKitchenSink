@@ -3,7 +3,7 @@ Converters
 
 This section contains converters that I've found useful.
 
-Value To Visibility
+[Value To Visibility](ValueToVisibilityConverter.cs)
 -------------------
 
 Defined in resources as:
