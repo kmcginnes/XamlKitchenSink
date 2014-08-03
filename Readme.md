@@ -7,4 +7,4 @@ Other Projects
 --------------
 [WPF Crutches](https://bitbucket.org/rstarkov/wpfcrutches) was started many years ago, but has some fantastic tools.
 
-One I've used the most is the `ObservableSortedList<T>`
+One I've used the most is the `ObservableSortedList<T>` which you can read about [here](http://roman.st/Article/Sorting-ObservableCollection-ObservableSortedList).
