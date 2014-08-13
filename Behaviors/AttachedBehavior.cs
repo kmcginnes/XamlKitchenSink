@@ -1,3 +1,77 @@
+public interface IBehavior
+{
+    bool IsApplicable();
+    void Attach();
+    void Update();
+    void Detach();
+}
+
+public abstract class Behavior<THost> : IBehavior where THost : DependencyObject
+{
+    private readonly WeakReference _hostReference;
+
+    protected Behavior(DependencyObject host)
+    {
+        if (!(host is THost))
+        {
+            throw new ArgumentException("Host is not the expected type", "host");
+        }
+
+        _hostReference = new WeakReference(host);
+    }
+
+    private THost GetHost()
+    {
+        return (THost)_hostReference.Target;
+    }
+
+    protected virtual bool IsApplicable(THost host)
+    {
+        return true;
+    }
+
+    protected virtual void Attach(THost host) { }
+    protected virtual void Detach(THost host) { }
+    protected abstract void Update(THost host);
+
+    bool IBehavior.IsApplicable()
+    {
+        var host = GetHost();
+
+        return host != null && IsApplicable(host);
+    }
+
+    void IBehavior.Attach()
+    {
+        var host = GetHost();
+
+        if (host != null)
+        {
+            Attach(host);
+        }
+    }
+
+    void IBehavior.Update()
+    {
+        var host = GetHost();
+
+        if (host != null)
+        {
+            Update(host);
+        }
+    }
+
+    void IBehavior.Detach()
+    {
+        var host = GetHost();
+
+        if (host != null)
+        {
+            Detach(host);
+        }
+    }
+}
+
 public class AttachedBehavior
 {
     public static AttachedBehavior Register(Func<DependencyObject, IBehavior> behaviorFactory)
