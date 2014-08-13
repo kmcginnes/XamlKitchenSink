@@ -37,4 +37,12 @@ Everyone has used the BooleanToVisibilityConverter. It is used so much that Micr
            Visibility="{Binding IsTheCapedCrusader, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 ```
 
-There's a better way. Using attached behaviors. All credit for this code goes to Bryan Watts for his [series on behaviors](http://www.executableintent.com/attached-behaviors-part-1-booleanvisibility/)
+There's a better way. Using attached behaviors. All credit for this code goes to Bryan Watts for his [series on behaviors](http://www.executableintent.com/attached-behaviors-part-1-booleanvisibility/).
+
+No static resource is required. We just bind our boolean value to the attached property and let WPF do all the heavy lifting.
+
+```XML
+<TextBlock Text="I'm Batman!"
+           behaviors:BooleanVisibility.Value="{Binding IsTheCapedCrusader}"/>
+```
+
