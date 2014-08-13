@@ -51,6 +51,33 @@ That's the simplest scenario. What if we want to collapse the element when the v
 ```XML
 <TextBlock Text="Joker is here"
            behaviors:BooleanVisibility.Value="{Binding IsTheCapedCrusader}"
-           behaviors:BooleanVisibility.WhenTrue="Collapse"
+           behaviors:BooleanVisibility.WhenTrue="Collapsed"
            behaviors:BooleanVisibility.WhenFalse="Visible"/>
+```
+
+
+NullVisibility
+--------------
+
+Similar to BooleanVisibility, but for null checks.
+
+```XML
+<TextBlock Text="Joker is here"
+           behaviors:NullVisibility.Value="{Binding IsTheCapedCrusader}"
+           behaviors:NullVisibility.WhenNull="Collapsed"
+           behaviors:NullVisibility.WhenNotNull="Visible"/>
+```
+
+
+ValueVisibility
+--------------
+
+Similar to BooleanVisibility, but for any value. Think enums, strings, numbers, etc.
+
+```XML
+<TextBlock Text="Batmobile is fully armored"
+           behaviors:ValueVisibility.Value="{Binding BatmobileMode}"
+           behaviors:ValueVisibility.TargetValue="{x:Static enums:BatmobileMode.Armored}"
+           behaviors:ValueVisibility.WhenMatched="Visible"
+           behaviors:ValueVisibility.WhenNotMatched="Collapsed"/>
 ```
