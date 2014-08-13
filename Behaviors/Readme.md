@@ -46,3 +46,11 @@ No static resource is required. We just bind our boolean value to the attached p
            behaviors:BooleanVisibility.Value="{Binding IsTheCapedCrusader}"/>
 ```
 
+That's the simplest scenario. What if we want to collapse the element when the value is true? Normally you'd have to create a custom converter that inverted the bool, or took the visiblity value to use for true/false values. It's similar here, just cleaner.
+
+```XML
+<TextBlock Text="Joker is here"
+           behaviors:BooleanVisibility.Value="{Binding IsTheCapedCrusader}"
+           behaviors:BooleanVisibility.WhenTrue="Collapse"
+           behaviors:BooleanVisibility.WhenFalse="Visible"/>
+```
