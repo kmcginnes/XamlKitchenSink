@@ -13,7 +13,7 @@ public static class ValueVisibility
         "WhenNotMatched", typeof(Visibility), typeof(ValueVisibility), new FrameworkPropertyMetadata(Visibility.Collapsed, OnArgumentsChanged));
 
     private static readonly AttachedBehavior Behavior = 
-        AttachedBehavior.Register(host => new EnumVisibilityBehavior(host));
+        AttachedBehavior.Register(host => new ValueVisibilityBehavior(host));
 
     private static void OnArgumentsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -60,15 +60,36 @@ public static class ValueVisibility
         uiElement.SetValue(WhenNotMatchedProperty, visibility);
     }
 
-    private sealed class EnumVisibilityBehavior : Behavior<UIElement>
+    private sealed class ValueVisibilityBehavior : Behavior<UIElement>
     {
-        internal EnumVisibilityBehavior(DependencyObject host) : base(host) { }
+        internal ValueVisibilityBehavior(DependencyObject host) : base(host) { }
 
         protected override void Update(UIElement host)
         {
-            host.Visibility = GetValue(host) == GetTargetValue(host)
-                ? GetWhenMatched(host) 
-                : GetWhenNotMatched(host);
+            var value = GetValue(host);
+            var targetValue = GetTargetValue(host);
+
+            if (targetValue == null)
+            {
+                host.Visibility = GetWhenNotMatched(host);
+                return;
+            }
+            
+            try
+            {
+                var convertedTargetValue = Convert.ChangeType(targetValue, value.GetType());
+
+                var whenMatched = GetWhenMatched(host);
+                var whenNotMatched = GetWhenNotMatched(host);
+
+                host.Visibility = value.Equals(convertedTargetValue)
+                    ? whenMatched
+                    : whenNotMatched;
+            }
+            catch (Exception)
+            {
+                host.Visibility = GetWhenNotMatched(host);
+            }
         }
     }
 }
