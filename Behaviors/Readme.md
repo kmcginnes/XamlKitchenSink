@@ -4,8 +4,22 @@ Behaviors
 Behaviors extend the functionality of existing WPF controls. They are useful for so  many things. Here's just a few.
 
 
+Password
+--------
+
+The Password behavior allows binding of the plain text password from a PasswordBox. This isn't recomended for security reasons, but it's here if you want it.
+
+```XML
+<PasswordBox behaviors:Password.Value="{Binding Password, Mode=TwoWay}"/>
+```
+
+__Note:__ The `Mode=TwoWay` is required.
+
+You've probably seen other attached behaviors doing the same thing. Most of those require two properties. One to turn on the password monitoring, the other to bind the value. I've reduced that down to one property; the binding.
+
+
 Focus
--------------
+-----
 
 This behavior allows you to control the keyboard focus of an element through bindings.
 
