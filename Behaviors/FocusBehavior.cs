@@ -1,32 +1,28 @@
-using System.Windows;
-
-namespace WatchGuard.Elx.Modules.Shared
+public static class Focus
 {
+    public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(
+            "Value", typeof(bool), typeof(Focus), new UIPropertyMetadata(false, OnIsFocusedPropertyChanged));
 
-    // Sourced from: http://stackoverflow.com/questions/1356045/set-focus-on-textbox-in-wpf-from-view-model-c-wpf/1356781#1356781
-    public static class FocusBehavior
+    public static bool GetValue(DependencyObject obj)
     {
+        return (bool)obj.GetValue(ValueProperty);
+    }
 
-        public static readonly DependencyProperty IsFocusedProperty = DependencyProperty.RegisterAttached(
-                "IsFocused", typeof(bool), typeof(FocusBehavior), new UIPropertyMetadata(false, OnIsFocusedPropertyChanged));
+    public static void SetValue(DependencyObject obj, bool value)
+    {
+        obj.SetValue(ValueProperty, value);
+    }
 
-        public static bool GetIsFocused(DependencyObject obj)
+    private static void OnIsFocusedPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    {
+        if ((bool)e.NewValue)
         {
-            return (bool)obj.GetValue(IsFocusedProperty);
-        }
-
-
-        public static void SetIsFocused(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsFocusedProperty, value);
-        }
-
-        private static void OnIsFocusedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var uiElement = (UIElement)d;
-            if ((bool)e.NewValue)
+            var ui = sender as UIElement;
+            if (ui != null && !DesignerProperties.GetIsInDesignMode(ui))
             {
-                uiElement.Focus(); // Don't care about false values.
+                ui.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Input, 
+                    new ThreadStart(() => Keyboard.Focus(ui)));
             }
         }
     }
