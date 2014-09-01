@@ -4,14 +4,14 @@ Behaviors
 Behaviors extend the functionality of existing WPF controls. They are useful for so  many things. Here's just a few.
 
 
-FocusBehavior
+Focus
 -------------
 
 This behavior allows you to control the keyboard focus of an element through bindings.
 
 ```XML
 <TextBox x:Name="FirstName" Text="{Binding FirstName}"
-         behaviors:FocusBehavior.IsFocused="{Binding IsFirstNameFocused}"/>
+         behaviors:Focus.Value="{Binding IsFirstNameFocused}"/>
 ```
 
 For example, suppose you have an `ItemsControl`. If you add
