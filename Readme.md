@@ -7,6 +7,6 @@ Other Projects
 --------------
 [WPF Crutches](https://bitbucket.org/rstarkov/wpfcrutches) was started many years ago, but has some fantastic tools.
 
-One I've used the most is the `ObservableSortedList<T>` which you can read about [here](http://roman.st/Article/Sorting-ObservableCollection-ObservableSortedList).
+If you want a great source of inspiration for attached behaviors, then look to [this great series](http://www.executableintent.com/attached-behaviors-part-1-booleanvisibility/) by Bryan Watts. In it he gives alternatives to the common converter. I've since created many useful behaviors based on his work that you can find in the behaviors folder.
 
-If you want a great source of inspiration for attached behaviors, then look to [this great series](http://www.executableintent.com/attached-behaviors-part-1-booleanvisibility/) by Bryan Watts. In it he gives alternatives to the common converter. I'll be incorporating his work whenever I can.
+Since incorporating ReactiveUI I've been rethinking a lot of interaction logic in my view models. You can see one example of how to bubble commands up from the child in a collection to its parent in my [proof of concept](https://github.com/kmcginnes/PoC.ReactiveCommandBubbling).
