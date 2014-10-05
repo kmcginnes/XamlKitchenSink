@@ -5,7 +5,7 @@ This is a github repository I started as a dumping ground for all the usefull ch
 
 SpicyTaco.AutoGrid
 ------------------
-When you get fed up typing out `Grid`'s verbose `ColumnDefinitions` checkout [SpicyTaco.AutoGrid](). There are many solutions to this problem. This is mine.
+When you get fed up typing out `Grid`'s verbose `ColumnDefinitions` checkout [SpicyTaco.AutoGrid](https://github.com/kmcginnes/SpicyTaco.AutoGrid). There are many solutions to this problem. This is mine.
 
 In addition to column and row definitions, it also offers `ChildMargin`, `ChildHorizontalAlignment`, and `ChildVerticalAlignment`.
 
