@@ -3,6 +3,12 @@ XAML Kitchen Sink
 
 This is a github repository I started as a dumping ground for all the usefull chunks of code for XAML, view models, etc. This is mostly focused on WPF, but could be applicable to Silverlight, Windows Store Apps, Windows Phone 7/8 apps, etc.
 
+SpicyTaco.AutoGrid
+------------------
+When you get fed up typing out `Grid`'s verbose `ColumnDefinitions` checkout [SpicyTaco.AutoGrid](). There are many solutions to this problem. This is mine.
+
+In addition to column and row definitions, it also offers `ChildMargin`, `ChildHorizontalAlignment`, and `ChildVerticalAlignment`.
+
 Other Projects
 --------------
 [WPF Crutches](https://bitbucket.org/rstarkov/wpfcrutches) was started many years ago, but has some fantastic tools. [WPF Bag of Tricks](https://github.com/thinkpixellab/bot) is another great one.
