@@ -22,3 +22,7 @@ Looking for spinners, checkout [Xaml Spinner Kit](https://github.com/nigel-samps
 If you want a great source of inspiration for attached behaviors, then look to [this great series](http://www.executableintent.com/attached-behaviors-part-1-booleanvisibility/) by Bryan Watts. In it he gives alternatives to the common converter. I've since created many useful behaviors based on his work that you can find in the behaviors folder.
 
 Since incorporating ReactiveUI I've been rethinking a lot of interaction logic in my view models. You can see one example of how to bubble commands up from the child in a collection to its parent in my [proof of concept](https://github.com/kmcginnes/PoC.ReactiveCommandBubbling).
+
+Links
+-----
+[Matrial Design Shadows](http://marcangers.com/material-design-shadows-in-wpf/) - Marc Angers did an excellent job reproducing the beautiful shadows from Google's Material Design guidelines.
