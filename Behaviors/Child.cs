@@ -1,8 +1,8 @@
 public class Child
 {
     public static readonly DependencyProperty MarginProperty = DependencyProperty.RegisterAttached(
-        "Margin", typeof (Thickness?), typeof (Child),
-        new PropertyMetadata(default(Thickness?), OnMarginChanged));
+        "Margin", typeof(Thickness?), typeof(Child),
+        new FrameworkPropertyMetadata(default(Thickness?), FrameworkPropertyMetadataOptions.AffectsMeasure, OnMarginChanged));
 
     public static void SetMargin(DependencyObject element, Thickness? value)
     {
@@ -11,15 +11,18 @@ public class Child
 
     public static Thickness? GetMargin(DependencyObject element)
     {
-        return (Thickness?) element.GetValue(MarginProperty);
+        return (Thickness?)element.GetValue(MarginProperty);
     }
 
-    static void OnMarginChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    static void OnMarginChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
     {
         var panel = dependencyObject as Panel;
         if (panel == null) return;
 
         panel.Loaded += PanelOnLoaded;
+
+        var oldValue = (Thickness?) args.OldValue;
+        UpdateChildMargin(panel, oldValue);
     }
 
     static void PanelOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -29,12 +32,28 @@ public class Child
 
         panel.Loaded -= PanelOnLoaded;
 
-        foreach (var child in panel.Children.OfType<FrameworkElement>().Where(x => x.GetValue(FrameworkElement.MarginProperty) != null))
+        UpdateChildMargin(panel);
+    }
+
+    static void UpdateChildMargin(Panel panel, Thickness? oldValue = null)
+    {
+        var childrenWithoutExplicitMargin =
+            panel.Children
+                .OfType<FrameworkElement>()
+                .Where(x => MarginNotSet(x, oldValue));
+
+        var margin = GetMargin(panel) ?? DependencyProperty.UnsetValue;
+
+        foreach (var child in childrenWithoutExplicitMargin)
         {
-            if (GetMargin(panel).HasValue)
-                child.SetValue(FrameworkElement.MarginProperty, GetMargin(panel));
-            else
-                child.SetValue(FrameworkElement.MarginProperty, DependencyProperty.UnsetValue);
+            child.SetValue(FrameworkElement.MarginProperty, margin);
         }
+    }
+
+    static bool MarginNotSet(FrameworkElement child, Thickness? oldValue)
+    {
+        var childMargin = child.ReadLocalValue(FrameworkElement.MarginProperty) ?? DependencyProperty.UnsetValue;
+
+        return childMargin == DependencyProperty.UnsetValue || childMargin.Equals(oldValue);
     }
 }
