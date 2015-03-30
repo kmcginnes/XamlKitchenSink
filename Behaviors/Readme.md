@@ -39,7 +39,7 @@ in the child view then it will set focus when you add items. However, it will al
 Child
 -----
 
-This behavior is a dumping ground of sorts for all those behaviors you whish panels had for affecting all their children.
+This behavior is a dumping ground of sorts for all those behaviors you whish panels had for affecting all their children. If a child element already has a margin then this behavior will not affect it.
 
 ```XML
 <StackPanel behaviors:Child.Margin="5">
