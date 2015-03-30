@@ -36,6 +36,17 @@ Loaded += (sender, args) => FirstName.Focus();
 
 in the child view then it will set focus when you add items. However, it will also set focus when the view loads. This is undesirable if you want another element to have focus when the view loads.
 
+Child
+-----
+
+This behavior is a dumping ground of sorts for all those behaviors you whish panels had for affecting all their children.
+
+```XML
+<StackPanel behaviors:Child.Margin="5">
+  <Label Content="First Name:"/>
+  <TextBox />
+</StackPanel>
+```
 
 BooleanVisibility
 -----------------
