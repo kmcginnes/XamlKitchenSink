@@ -6,7 +6,7 @@ public static class BooleanVisibility
     }
 
     public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(
-        "Value", typeof (bool), typeof (BooleanVisibility), new PropertyMetadata(true, OnArgumentChanged));
+        "Value", typeof(bool), typeof(BooleanVisibility), new PropertyMetadata(true, OnArgumentChanged));
 
     public static void SetValue(DependencyObject element, bool value)
     {
@@ -15,7 +15,7 @@ public static class BooleanVisibility
 
     public static bool GetValue(DependencyObject element)
     {
-        return (bool) element.GetValue(ValueProperty);
+        return (bool)element.GetValue(ValueProperty);
     }
 
     public static readonly DependencyProperty WhenTrueProperty = DependencyProperty.RegisterAttached(
@@ -28,7 +28,7 @@ public static class BooleanVisibility
 
     public static Visibility GetWhenTrue(DependencyObject element)
     {
-        return (Visibility) element.GetValue(WhenTrueProperty);
+        return (Visibility)element.GetValue(WhenTrueProperty);
     }
 
     public static readonly DependencyProperty WhenFalseProperty = DependencyProperty.RegisterAttached(
@@ -41,10 +41,23 @@ public static class BooleanVisibility
 
     public static Visibility GetWhenFalse(DependencyObject element)
     {
-        return (Visibility) element.GetValue(WhenFalseProperty);
+        return (Visibility)element.GetValue(WhenFalseProperty);
     }
 
-    private static readonly AttachedBehavior Behavior = 
+    public static readonly DependencyProperty InvertProperty = DependencyProperty.RegisterAttached(
+        "Invert", typeof(bool), typeof(BooleanVisibility), new PropertyMetadata(default(bool), OnArgumentChanged));
+
+    public static void SetInvert(DependencyObject element, bool value)
+    {
+        element.SetValue(InvertProperty, value);
+    }
+
+    public static bool GetInvert(DependencyObject element)
+    {
+        return (bool)element.GetValue(InvertProperty);
+    }
+
+    private static readonly AttachedBehavior Behavior =
         AttachedBehavior.Register(host => new BooleanVisibilityBehavior(host));
 
     private sealed class BooleanVisibilityBehavior : Behavior<UIElement>
@@ -53,7 +66,9 @@ public static class BooleanVisibility
 
         protected override void Update(UIElement host)
         {
-            host.Visibility = GetValue(host) ? GetWhenTrue(host) : GetWhenFalse(host);
+            host.Visibility = GetInvert(host)
+                ? GetValue(host) ? GetWhenFalse(host) : GetWhenTrue(host)
+                : GetValue(host) ? GetWhenTrue(host) : GetWhenFalse(host);
         }
     }
 }
