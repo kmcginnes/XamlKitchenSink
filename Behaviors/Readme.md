@@ -80,6 +80,13 @@ That's the simplest scenario. What if we want to collapse the element when the v
            behaviors:BooleanVisibility.WhenFalse="Visible"/>
 ```
 
+or the simpler version:
+
+```XML
+<TextBlock Text="Joker is here"
+           behaviors:BooleanVisibility.Value="{Binding IsTheCapedCrusader}"
+           behaviors:BooleanVisibility.Invert="True"/>
+```
 
 NullVisibility
 --------------
