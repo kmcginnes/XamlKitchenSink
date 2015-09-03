@@ -18,9 +18,13 @@ At some point I'll create a T4 template that will make defining XAML colors much
 
 Something like:
 
+```
 Primary: #0275d8
+```
 
 into:
 
+```xaml
 <Color x:Key="Primary">#0275d8</Color>
 <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+```
