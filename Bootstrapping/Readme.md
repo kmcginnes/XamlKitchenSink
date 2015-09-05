@@ -10,6 +10,7 @@ This weeks lesson is bootstrapping your application.
 Every application requires some setup to get going. In .Net this typically involves a few things:
 
 * Initialize the logging framework and get a logger
+* Initialize the metrics recording framework
 * Register unhandled exception handlers
 * Parse app settings
 * Register IoC components
@@ -62,9 +63,19 @@ private static string GetAssemblyDirectory()
 }
 ```
 
-## Unhandled Exceptions
+## Metrics recorder
+
+Not every app uses metrics, but it should. How do you truly know if a feature is useful to your users without measuring it. The alternative is to stand over their shoulder 8 hours a day, 5 days a week. Or just keep sweating features that no one uses, wasting your employer thousands of dollars.
+
+In this category, simple is better. I really like StatsD. It pushes metrics to the server over UDP which is a very low overhead protocol. Plus, if the server is down, the app just keeps on trucking. Why should we care if we lose a few metrics here and there. They're nice, but not worth shutting down the business when we can't get them.
+
+Just like in logging, set up your own abstraction over whatever library you choose. The interface should be low ceremony; just a string
+
+## Handling unhandled exceptions
 
 Next, you should set up handlers for unhandled exceptions. Every framework/library has different ways of handling this, so figure out what they are and log them at the very least (this is what the FATAL log level is for). Doing this as early as possible allows you to find issues during your bootstrapping process. They happen. Trust me.
+
+Also, don't let your app continue to run after one of these exceptions. If the exception you are getting is truly not fatal then it should be getting caught somewhere up the stack. These handlers are strictly for the unexpected, and after one happens there's no telling what state your application is in. It's better to just tear it all down and try again.
 
 ```c#
 private void RegisterExceptionHandlers()
@@ -97,5 +108,92 @@ private void RegisterExceptionHandlers()
 }
 ```
 
+## Register IoC components
+
 Next, we start stitching our app together with our inversion of control container. Pick your poison; they're all good. Find one that allows you to use the design patterns you want to use. For example, very few containers have first class support for generic decorators, which is an extremely powerful pattern when used correctly. Do not fall into the trap of picking the container with a lot of features outside of simply dependency resolution and controlling lifetimes. That's their only job.
 
+Also, take advantage of the convention based registration. If you are building an Asp.net Web API app, then all of your controllers must be transient. Take advantage of these little patterns to make your life easier.
+
+## Run database migrations
+
+I'm a strong believer in database migrations that are run inside your application. This gives you immense control over the process. If you are using Entity Framework migrations, do yourself a favor and write your own `IDatabaseInitializer<>`. This allows you to log every step of the process, backup existing data, and perform database changes that EF migrations doesn't allow out of the box.
+
+```c#
+public class BootstrappingDatabaseInitializer : IDatabaseInitializer<BootstrappingDataContext>
+{
+    public void InitializeDatabase(BootstrappingDataContext context)
+    {
+        var dbExists = context.Database.Exists();
+        var dbLocation = context.Database.Connection.DataSource;
+        this.Log().Info(string.Format("Database location: {0}", dbLocation));
+
+        if (!dbExists)
+        {
+            this.Log().Info(string.Format("Creating database at {0}", dbLocation));
+            CopyResource("Bootstrapping.sdf", dbLocation);
+        }
+
+        var configuration = new Configuration();
+        var migrator = new DbMigrator(configuration);
+
+        var pendingMigrations = migrator.GetPendingMigrations().ToArray();
+
+        if (dbExists && pendingMigrations.Any())
+        {
+            BackupDatabase(dbLocation);
+        }
+
+        try
+        {
+            this.Log().Info(string.Format("Running migrations on {0}...", context.Database.Connection.DataSource));
+            foreach (var pendingMigration in pendingMigrations)
+            {
+                this.Log().Info(string.Format("Preparing database migration: {0}", pendingMigration));
+                migrator.Update(pendingMigration);
+            }
+            if (!dbExists && pendingMigrations.NotAny())
+            {
+                Configuration.SeedDatabase(context);
+            }
+            this.Log().Info("Finished running migrations...");
+        }
+        catch (SqlCeException e)
+        {
+            this.Log().Error(e, "Unable to execute database migrations.");
+        }
+    }
+
+    static void BackupDatabase(string existingDb)
+    {
+        var basePath = Path.GetDirectoryName(existingDb);
+        var baseFileName = Path.GetFileName(existingDb);
+        var backupPath = Path.Combine(basePath, "Backups");
+        Directory.CreateDirectory(backupPath);
+
+        var backupFileName = string.Concat(
+            Path.GetFileNameWithoutExtension(baseFileName),
+            "_",
+            DateTime.Now.ToString("yyyyMMddHHmmssfff"),
+            Path.GetExtension(baseFileName)
+            );
+        
+        var backupFullPath = Path.Combine(backupPath, backupFileName);
+        File.Copy(existingDb, backupFullPath, true);
+    }
+
+    void CopyResource(string resourceName, string file)
+    {
+        using (var resource = GetType().Assembly.GetManifestResourceStream(resourceName))
+        {
+            if (resource == null)
+            {
+                throw new ArgumentException("resourceName", "No such resource");
+            }
+            using (Stream output = File.OpenWrite(file))
+            {
+                resource.CopyTo(output);
+            }
+        }
+    }
+}
+```
