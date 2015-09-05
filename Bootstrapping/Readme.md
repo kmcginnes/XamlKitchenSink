@@ -63,6 +63,22 @@ private static string GetAssemblyDirectory()
 }
 ```
 
+This results in output similar to below depending on your logger configuration:
+
+```
+INFO [Main] 'AppBootstrapper'  ______               __          __                                     
+INFO [Main] 'AppBootstrapper' |   __ \.-----.-----.|  |_.-----.|  |_.----.---.-.-----.-----.-----.----.
+INFO [Main] 'AppBootstrapper' |   __ <|  _  |  _  ||   _|__ --||   _|   _|  _  |  _  |  _  |  -__|   _|
+INFO [Main] 'AppBootstrapper' |______/|_____|_____||____|_____||____|__| |___._|   __|   __|_____|__|  
+INFO [Main] 'AppBootstrapper'                                                  |__|  |__|              
+INFO [Main] 'AppBootstrapper' 
+INFO [Main] 'AppBootstrapper' Assembly location: C:\Projects\Bootstrapper\src\Bootstrapper\bin\Debug
+INFO [Main] 'AppBootstrapper'  Assembly version: 1.0.0.0
+INFO [Main] 'AppBootstrapper'      File version: 1.0.0.0
+INFO [Main] 'AppBootstrapper'   Product version: 1.0.0.0
+INFO [Main] 'AppBootstrapper'        Running as: DESKTOP-DUF3FP2\kmcgi
+```
+
 ## Metrics recorder
 
 Not every app uses metrics, but it should. How do you truly know if a feature is useful to your users without measuring it. The alternative is to stand over their shoulder 8 hours a day, 5 days a week. Or just keep sweating features that no one uses, wasting your employer thousands of dollars.
