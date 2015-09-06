@@ -1,11 +1,4 @@
-# Lessons Learned: Bootstrapping
-
-This weeks lesson is bootstrapping your application.
-
-* Clear and understandable flow
-* Synchronous, but not on the main thread
-* Logging is always the first thing initialized
-* Don't rely on magic, control your destiny
+# Bootstrapping Your Application
 
 Every application requires some setup to get going. In .Net this typically involves a few things:
 
@@ -16,7 +9,7 @@ Every application requires some setup to get going. In .Net this typically invol
 * Register IoC components
 * Run database migrations
 * Bind communication endpoints
-* Register with whatever framework we're using
+* Register with whatever framework we're using (Caliburn Micro, Asp.net MVC/WebAPI/SignalR, etc.)
 
 ## Initialize Logging
 
@@ -66,12 +59,12 @@ private static string GetAssemblyDirectory()
 This results in output similar to below depending on your logger configuration:
 
 ```
-INFO [Main] 'AppBootstrapper'  ______               __          __                                     
+INFO [Main] 'AppBootstrapper'  ______               __          __
 INFO [Main] 'AppBootstrapper' |   __ \.-----.-----.|  |_.-----.|  |_.----.---.-.-----.-----.-----.----.
 INFO [Main] 'AppBootstrapper' |   __ <|  _  |  _  ||   _|__ --||   _|   _|  _  |  _  |  _  |  -__|   _|
 INFO [Main] 'AppBootstrapper' |______/|_____|_____||____|_____||____|__| |___._|   __|   __|_____|__|  
-INFO [Main] 'AppBootstrapper'                                                  |__|  |__|              
-INFO [Main] 'AppBootstrapper' 
+INFO [Main] 'AppBootstrapper'                                                  |__|  |__|
+INFO [Main] 'AppBootstrapper'
 INFO [Main] 'AppBootstrapper' Assembly location: C:\Projects\Bootstrapper\src\Bootstrapper\bin\Debug
 INFO [Main] 'AppBootstrapper'  Assembly version: 1.0.0.0
 INFO [Main] 'AppBootstrapper'      File version: 1.0.0.0
@@ -83,7 +76,7 @@ INFO [Main] 'AppBootstrapper'        Running as: DESKTOP-DUF3FP2\kmcgi
 
 Not every app uses metrics, but it should. How do you truly know if a feature is useful to your users without measuring it. The alternative is to stand over their shoulder 8 hours a day, 5 days a week. Or just keep sweating features that no one uses, wasting your employer thousands of dollars.
 
-In this category, simple is better. I really like StatsD. It pushes metrics to the server over UDP which is a very low overhead protocol. Plus, if the server is down, the app just keeps on trucking. Why should we care if we lose a few metrics here and there. They're nice, but not worth shutting down the business when we can't get them.
+In this category, simple is better. I really like [StatsD](https://github.com/goncalopereira/statsd-csharp-client). It pushes metrics to the server over UDP which is a very low overhead protocol. Plus, if the server is down, the app just keeps on trucking. Why should we care if we lose a few metrics here and there. They're nice, but not worth shutting down the business when we can't get them.
 
 Just like in logging, set up your own abstraction over whatever library you choose. The interface should be low ceremony; just a string
 
@@ -133,6 +126,14 @@ Also, take advantage of the convention based registration. If you are building a
 ## Run database migrations
 
 I'm a strong believer in database migrations that are run inside your application. This gives you immense control over the process. If you are using Entity Framework migrations, do yourself a favor and write your own `IDatabaseInitializer<>`. This allows you to log every step of the process, backup existing data, and perform database changes that EF migrations doesn't allow out of the box.
+
+Here's an example of an initializer that I've used in multiple applications. It is designed for a SqlCe database used by desktop applications or Windows services.
+
+It will look for an existing `.sdf` database file. If it doesn't find one it will lay down a pre-existing fully migrated database file from a resource inside the assembly.
+
+If a database file already exists then it will check for pending migrations. It will then run each migration individually, logging each step of the way. This is important because you'll run into many migration issues both internally and externally.
+
+If migrations were pending or we laid down a fresh database from the assembly then we run the data seed code. You'll have to be careful to check for existing data and perform proper _upserts_ since the seed method could be run multiple times over a database's lifetime.
 
 ```c#
 public class BootstrappingDatabaseInitializer : IDatabaseInitializer<BootstrappingDataContext>
@@ -192,7 +193,7 @@ public class BootstrappingDatabaseInitializer : IDatabaseInitializer<Bootstrappi
             DateTime.Now.ToString("yyyyMMddHHmmssfff"),
             Path.GetExtension(baseFileName)
             );
-        
+
         var backupFullPath = Path.Combine(backupPath, backupFileName);
         File.Copy(existingDb, backupFullPath, true);
     }
