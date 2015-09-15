@@ -8,14 +8,14 @@ public static class NullVisibility
     public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(
         "Value", typeof(object), typeof(NullVisibility), new PropertyMetadata(null, OnArgumentChanged));
 
-    public static void SetValue(DependencyObject element, bool value)
+    public static void SetValue(DependencyObject element, object value)
     {
         element.SetValue(ValueProperty, value);
     }
 
-    public static bool GetValue(DependencyObject element)
+    public static object GetValue(DependencyObject element)
     {
-        return (bool)element.GetValue(ValueProperty);
+        return element.GetValue(ValueProperty);
     }
 
     public static readonly DependencyProperty WhenNullProperty = DependencyProperty.RegisterAttached(
@@ -44,6 +44,19 @@ public static class NullVisibility
         return (Visibility)element.GetValue(WhenNotNullProperty);
     }
 
+    public static readonly DependencyProperty InvertProperty = DependencyProperty.RegisterAttached(
+        "Invert", typeof(bool), typeof(NullVisibility), new PropertyMetadata(default(bool), OnArgumentChanged));
+
+    public static void SetInvert(DependencyObject element, bool value)
+    {
+        element.SetValue(InvertProperty, value);
+    }
+
+    public static bool GetInvert(DependencyObject element)
+    {
+        return (bool)element.GetValue(InvertProperty);
+    }
+
     private static readonly AttachedBehavior Behavior =
         AttachedBehavior.Register(host => new NullVisibilityBehavior(host));
 
@@ -53,7 +66,26 @@ public static class NullVisibility
 
         protected override void Update(UIElement host)
         {
-            host.Visibility = GetValue(host) == null ? GetWhenNull(host) : GetWhenNotNull(host);
+
+            host.Visibility = GetInvert(host)
+                ? IsValueNull(host) ? GetWhenNull(host) : GetWhenNotNull(host)
+                : IsValueNull(host) ? GetWhenNotNull(host) : GetWhenNull(host);
+        }
+
+        private bool IsValueNull(UIElement host)
+        {
+            var value = GetValue(host);
+
+            if (value == null)
+                return true;
+
+            var stringValue = value as String;
+            if (stringValue != null)
+            {
+                return String.IsNullOrEmpty(stringValue);
+            }
+
+            return false;
         }
     }
 }
