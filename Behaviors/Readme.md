@@ -91,7 +91,7 @@ or the simpler version:
 NullVisibility
 --------------
 
-Similar to BooleanVisibility, but for null checks.
+Similar to BooleanVisibility, but for null checks. If the value is a `string` then it will also check for `string.Empty`.
 
 ```XML
 <TextBlock Text="Joker is here"
