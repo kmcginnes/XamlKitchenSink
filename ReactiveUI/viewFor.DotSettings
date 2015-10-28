@@ -1,0 +1,29 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Shortcut/@EntryValue">viewFor</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Description/@EntryValue">Adds the properties for IViewFor</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Text/@EntryValue">public $ViewName$Model ViewModel&#xD;
+{&#xD;
+    get { return ($ViewName$Model)GetValue(ViewModelProperty); }&#xD;
+    set { SetValue(ViewModelProperty, value); }&#xD;
+}&#xD;
+public static readonly DependencyProperty ViewModelProperty =&#xD;
+    DependencyProperty.Register("ViewModel", typeof($ViewName$Model), typeof($ViewName$), new PropertyMetadata(null));&#xD;
+&#xD;
+object IViewFor.ViewModel&#xD;
+{&#xD;
+    get { return ViewModel; }&#xD;
+    set { ViewModel = ($ViewName$Model)value; }&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/Type/@EntryValue">InCSharpTypeMember</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Field/=ViewName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Field/=ViewName/Expression/@EntryValue">typeName()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Field/=ViewName/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Field/=ViewName/Order/@EntryValue">0</s:Int64></wpf:ResourceDictionary>
