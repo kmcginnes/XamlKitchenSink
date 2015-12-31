@@ -39,6 +39,8 @@ class Foo
 
 This removes the `LogManager.GetLoggerFor()` call and pushes it into the IoC container. This is a decent improvement, but really, the logger is an optional dependency. We generally use constructor injection to make testing easier by mocking out dependencies. I generally don't care about mocking out a logger. So this is just noise.
 
+## this.Log
+
 My favorite approach is to use an extension method off of `object` that retrieves the logger:
 
 ```c#
@@ -96,3 +98,9 @@ static class FooExtensions
   }
 }
 ```
+
+This all started after I read ferventcoder's [post on CodeProject](http://www.codeproject.com/Articles/530808/Introducingplusthis-Log) about this pattern. Ever since I've been using a slightly customized version of his original idea.
+
+I also heard that ReactiveUI and Splat have an implementation of this idea as well. I even think that it came first. But I prefer my own implementation for a couple of reasons.
+
+First, it doesn't depend on anything to just work. Second, I can bring in the source code, which means the extension method lives within my app's namespace. I don't have to add a `using` statement just for logging. It seems minor, but I consider that a big win.
