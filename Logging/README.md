@@ -55,6 +55,8 @@ class Foo
 
 Not only is this way shorter than both the options above, it is also **always** available. If I'm in a class that has never logged before I don't have to worry about setting up a field and getting the logger instance, I just keep typing. I never have to leave the context of the code I'm trying to write. And that is a very good thing.
 
+### Configuration
+
 So how does this work? Easy.
 
 There's an abstraction of your typical log methods in `ILog`. This is all your application will need to know about. Therefore all dependencies on log4net or NLog are pushed into application bootstrapper. In fact, if you don't do anything in the bootstrapper you'll just get a `NullLog` instance that does nothing.
@@ -67,6 +69,8 @@ Log.InitializeWith<ConsoleLog>();
 Log.InitializeWith<Log4netLog>();
 // or
 ```
+
+### Static methods
 
 What if you're in a static method or class? You would not be able to use `this.Log()` because there is no `this`. Correct. But where there's a will, there's a way.
 
@@ -98,6 +102,8 @@ static class FooExtensions
   }
 }
 ```
+
+## Source of inspiration
 
 This all started after I read ferventcoder's [post on CodeProject](http://www.codeproject.com/Articles/530808/Introducingplusthis-Log) about this pattern. Ever since I've been using a slightly customized version of his original idea.
 
