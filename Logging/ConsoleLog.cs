@@ -7,10 +7,23 @@ public class ConsoleLog : ILog, ILog<ConsoleLog>
 
     void Write(string level, string message, Exception exception = null)
     {
-        Console.Out.WriteLine("[{0}] '{1}' {2}", (object)level, (object)_loggerName, (object)message);
-        if (exception == null)
-            return;
-        Console.Out.WriteLine("[{0}] '{1}' {2}: {3} {4}", (object)level, (object)_loggerName, (object)exception.GetType().FullName, (object)exception.Message, (object)exception.StackTrace);
+        var timestamp = DateTime.Now.ToLongTimeString();
+        var threadName = Thread.CurrentThread.Name;
+        if (String.IsNullOrEmpty(threadName))
+            threadName = Thread.CurrentThread.ManagedThreadId.ToString();
+
+        var shortLoggerName = _loggerName.Split('.').LastOrDefault() ?? "None";
+
+        var prefix = String.Format("{0} {1,5} [{2}][{3}]", timestamp, level, threadName, shortLoggerName);
+
+        Console.Out.WriteLine("{0}  {1}", prefix, message);
+
+        if (exception != null)
+        {
+            Console.Out.WriteLine(
+                "{0}{1}: {2} {3}",
+                Environment.NewLine, exception.GetType().FullName, exception.Message, exception.StackTrace);
+        }
     }
 
     public void InitializeFor(string loggerName)
