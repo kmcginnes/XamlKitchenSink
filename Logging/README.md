@@ -67,7 +67,15 @@ Alternatively, you can set up `this.Log()` to return any logger you want:
 Log.InitializeWith<ConsoleLog>();
 // or
 Log.InitializeWith<Log4netLog>();
-// or
+```
+
+You can also create a composite logger like this:
+
+```c#
+public class FileAndConsoleLogger : CompositeLog<FileAndConsoleLogger>
+{
+  public FileAndConsoleLogger() : base(new ConsoleLog(), new FileLog()) { }
+}
 ```
 
 ### Static methods
