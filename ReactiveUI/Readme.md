@@ -171,3 +171,7 @@ public partial class PlaybackView : GenericPlaybackView
     ...>
 </local:GenericPlaybackView>
 ```
+
+## References
+
+[Description of this.WhenActivated in view bindings](http://stackoverflow.com/questions/22340513/reactiveui-observableforproperty-lifetime/22341350#22341350)
