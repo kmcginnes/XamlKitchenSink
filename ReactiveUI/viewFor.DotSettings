@@ -4,19 +4,22 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Description/@EntryValue">Adds the properties for IViewFor</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Text/@EntryValue">public $ViewName$Model ViewModel&#xD;
 {&#xD;
-    get { return ($ViewName$Model)GetValue(ViewModelProperty); }&#xD;
-    set { SetValue(ViewModelProperty, value); }&#xD;
+    get =&gt; ($ViewName$Model)GetValue(ViewModelProperty);&#xD;
+    set =&gt; SetValue(ViewModelProperty, value);&#xD;
 }&#xD;
-public static readonly DependencyProperty ViewModelProperty =&#xD;
-    DependencyProperty.Register("ViewModel", typeof($ViewName$Model), typeof($ViewName$), new PropertyMetadata(null));&#xD;
 &#xD;
 object IViewFor.ViewModel&#xD;
 {&#xD;
-    get { return ViewModel; }&#xD;
-    set { ViewModel = ($ViewName$Model)value; }&#xD;
-}</s:String>
+    get =&gt; ViewModel;&#xD;
+    set =&gt; ViewModel = ($ViewName$Model)value;&#xD;
+}&#xD;
+&#xD;
+public static readonly DependencyProperty ViewModelProperty =&#xD;
+    DependencyProperty.Register("ViewModel", typeof($ViewName$Model), typeof($ViewName$), new PropertyMetadata(null));&#xD;
+</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Categories/=Imported_002011_002F11_002F2018/@EntryIndexedValue">Imported 11/11/2018</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=74B00B8C402C914886E736583DF121BC/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
