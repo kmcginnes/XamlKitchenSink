@@ -1,0 +1,25 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Shortcut/@EntryValue">observable</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Description/@EntryValue">Creates an Assisticant Observable field and corresponding property</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Text/@EntryValue">private readonly Observable&lt;$Type$&gt; _$FieldName$ = new Observable&lt;$Type$&gt;();&#xD;
+public $Type$ $PropertyName$&#xD;
+{&#xD;
+    get =&gt; _$FieldName$;&#xD;
+    set =&gt; _$FieldName$.Value = value;&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=Type/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=Type/Expression/@EntryValue">suggestVariableType()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=Type/InitialRange/@EntryValue">2</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=Type/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=PropertyName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=PropertyName/Expression/@EntryValue">suggestVariableName()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=PropertyName/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=FieldName/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=FieldName/Expression/@EntryValue">decapitalize(PropertyName)</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=FieldName/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=5A773D51B78C3340A93537E71C6DACAB/Field/=FieldName/Order/@EntryValue">2</s:Int64></wpf:ResourceDictionary>
